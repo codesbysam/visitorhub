@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldCheck, UserCheck, Lock, User, LogIn } from 'lucide-react';
-import { GoogleLogin } from '@react-oauth/google';
+import { ShieldCheck, Lock, User, LogIn } from 'lucide-react';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -10,18 +9,15 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const { login, loginWithGoogle } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleManualLogin = async (e, customUser, customPass) => {
-    if (e) e.preventDefault();
+  const handleManualLogin = async (e) => {
+    e.preventDefault();
     setError('');
     setIsSubmitting(true);
 
-    const userToLogin = customUser || username;
-    const passToLogin = customPass || password;
-
-    const result = await login(userToLogin, passToLogin);
+    const result = await login(username, password);
     setIsSubmitting(false);
 
     if (result.success) {
@@ -29,24 +25,6 @@ const Login = () => {
     } else {
       setError(result.message);
     }
-  };
-
-  const handleGoogleSuccess = async (credentialResponse) => {
-    setError('');
-    if (!credentialResponse.credential) {
-      setError('Google Login failed. No credential received.');
-      return;
-    }
-    const result = await loginWithGoogle(credentialResponse.credential);
-    if (result.success) {
-      navigate('/');
-    } else {
-      setError(result.message);
-    }
-  };
-
-  const handleGoogleError = () => {
-    setError('Google Login was unsuccessful or cancelled.');
   };
 
   return (
@@ -100,47 +78,6 @@ const Login = () => {
             <span>{isSubmitting ? 'Signing in...' : 'Sign In'}</span>
           </button>
         </form>
-
-        <div className="demo-login-divider">
-          <span>Or continue with Google</span>
-        </div>
-
-        <div className="google-auth-wrapper">
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onError={handleGoogleError}
-            useOneTap
-            shape="rectangular"
-            theme="outline"
-            size="large"
-            text="signin_with"
-            width="100%"
-          />
-        </div>
-
-        <div className="demo-login-divider" style={{ marginTop: '2rem' }}>
-          <span>Quick Demo Testing</span>
-        </div>
-
-        <div className="demo-buttons-grid">
-          <button
-            type="button"
-            className="btn btn-demo admin-demo-btn"
-            onClick={() => handleManualLogin(null, 'admin', 'adminpassword')}
-          >
-            <ShieldCheck size={16} />
-            <span>Admin</span>
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-demo receptionist-demo-btn"
-            onClick={() => handleManualLogin(null, 'visitor', 'visitorpassword')}
-          >
-            <UserCheck size={16} />
-            <span>Visitor</span>
-          </button>
-        </div>
       </div>
     </div>
   );

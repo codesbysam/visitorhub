@@ -12,31 +12,11 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
   },
-  email: {
-    type: String,
-    unique: true,
-    sparse: true,
-    trim: true,
-    lowercase: true,
-  },
-  googleId: {
-    type: String,
-    unique: true,
-    sparse: true,
-  },
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  avatarUrl: {
-    type: String,
-    default: '',
-  },
+
   role: {
     type: String,
-    enum: ['admin', 'visitor'],
-    default: 'visitor',
+    enum: ['admin'],
+    default: 'admin',
   },
 }, { timestamps: true });
 
