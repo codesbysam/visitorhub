@@ -6,6 +6,15 @@ import VisitorManagement from './pages/VisitorManagement';
 import Login from './pages/Login';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
+// Helper to redirect visitors from dashboard
+const DashboardWrapper = () => {
+  const { isVisitor } = useAuth();
+  if (isVisitor) {
+    return <Navigate to="/visitors" replace />;
+  }
+  return <Dashboard />;
+};
+
 // Protected Route Wrapper
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = useAuth();
@@ -31,13 +40,15 @@ const MainLayout = ({ children }) => {
         </div>
         
         <nav className="nav-links">
-          <NavLink 
-            to="/" 
-            className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
-          >
-            <LayoutDashboard size={20} />
-            <span>Dashboard</span>
-          </NavLink>
+          {user?.role !== 'visitor' && (
+            <NavLink 
+              to="/" 
+              className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
+            >
+              <LayoutDashboard size={20} />
+              <span>Dashboard</span>
+            </NavLink>
+          )}
           <NavLink 
             to="/visitors" 
             className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}
@@ -85,7 +96,10 @@ function App() {
             path="/" 
             element={
               <ProtectedRoute>
-                <MainLayout><Dashboard /></MainLayout>
+                <MainLayout>
+                  {/* Redirect visitors directly to /visitors */}
+                  <DashboardWrapper />
+                </MainLayout>
               </ProtectedRoute>
             } 
           />

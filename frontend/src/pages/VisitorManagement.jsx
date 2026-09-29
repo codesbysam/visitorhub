@@ -112,9 +112,11 @@ const VisitorManagement = () => {
         </div>
         
         <div style={{ display: 'flex', gap: '1rem' }}>
-          <button className="btn btn-secondary" onClick={exportToCSV}>
-            <Download size={18} /> Export CSV
-          </button>
+          {isAdmin && (
+            <button className="btn btn-secondary" onClick={exportToCSV}>
+              <Download size={18} /> Export CSV
+            </button>
+          )}
           <button className="btn btn-primary" onClick={() => handleOpenModal()}>
             <Plus size={18} /> Add Visitor
           </button>
