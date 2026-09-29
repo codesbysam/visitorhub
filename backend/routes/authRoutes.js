@@ -21,15 +21,15 @@ const seedDefaultUsers = async () => {
       console.log('Seeded default Admin user (admin / adminpassword)');
     }
 
-    const receptionistExists = await User.findOne({ username: 'receptionist' });
-    if (!receptionistExists) {
+    const visitorExists = await User.findOne({ username: 'visitor' });
+    if (!visitorExists) {
       await User.create({
-        username: 'receptionist',
-        password: 'receptionpassword',
-        name: 'Front Desk Receptionist',
-        role: 'receptionist',
+        username: 'visitor',
+        password: 'visitorpassword',
+        name: 'Front Desk Visitor',
+        role: 'visitor',
       });
-      console.log('Seeded default Receptionist user (receptionist / receptionpassword)');
+      console.log('Seeded default Visitor user (visitor / visitorpassword)');
     }
   } catch (error) {
     console.error('Error seeding default users:', error.message);
@@ -97,7 +97,7 @@ router.post('/google', async (req, res) => {
 
     if (!user) {
       const count = await User.countDocuments();
-      const role = count === 0 ? 'admin' : 'receptionist';
+      const role = count === 0 ? 'admin' : 'visitor';
 
       user = await User.create({
         googleId,

@@ -135,10 +135,10 @@ const Login = () => {
           <button
             type="button"
             className="btn btn-demo receptionist-demo-btn"
-            onClick={() => handleManualLogin(null, 'receptionist', 'receptionpassword')}
+            onClick={() => handleManualLogin(null, 'visitor', 'visitorpassword')}
           >
             <UserCheck size={16} />
-            <span>Receptionist</span>
+            <span>Visitor</span>
           </button>
         </div>
       </div>

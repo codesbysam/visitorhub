@@ -87,10 +87,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isAdmin = user?.role === 'admin';
-  const isReceptionist = user?.role === 'receptionist';
+  const isVisitor = user?.role === 'visitor';
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, loginWithGoogle, logout, isAdmin, isReceptionist }}>
+    <AuthContext.Provider value={{ user, token, loading, login, loginWithGoogle, logout, isAdmin, isVisitor }}>
       {children}
     </AuthContext.Provider>
   );
