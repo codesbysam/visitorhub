@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldCheck, Lock, User, LogIn } from 'lucide-react';
+import { ShieldCheck, Lock, User, LogIn, UserCheck } from 'lucide-react';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -24,6 +24,21 @@ const Login = () => {
       navigate('/');
     } else {
       setError(result.message);
+    }
+  };
+
+  const handleVisitorLogin = async () => {
+    setError('');
+    setIsSubmitting(true);
+    
+    // Auto-login with the seeded visitor account
+    const result = await login('visitor', 'visitorpassword');
+    setIsSubmitting(false);
+
+    if (result.success) {
+      navigate('/');
+    } else {
+      setError('Visitor access is currently unavailable.');
     }
   };
 
@@ -75,9 +90,24 @@ const Login = () => {
 
           <button type="submit" className="btn btn-primary login-btn" disabled={isSubmitting}>
             <LogIn size={18} />
-            <span>{isSubmitting ? 'Signing in...' : 'Sign In'}</span>
+            <span>{isSubmitting ? 'Signing in...' : 'Sign In as Admin'}</span>
           </button>
         </form>
+
+        <div className="demo-login-divider" style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+          <span>Or</span>
+        </div>
+
+        <button 
+          type="button" 
+          className="btn btn-demo receptionist-demo-btn" 
+          onClick={handleVisitorLogin}
+          disabled={isSubmitting}
+          style={{ width: '100%' }}
+        >
+          <UserCheck size={18} />
+          <span>Login as Visitor (No Password)</span>
+        </button>
       </div>
     </div>
   );

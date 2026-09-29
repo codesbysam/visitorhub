@@ -17,6 +17,17 @@ const seedDefaultUsers = async () => {
       });
       console.log('Seeded default Admin user (admin / adminpassword)');
     }
+
+    const visitorExists = await User.findOne({ username: 'visitor' });
+    if (!visitorExists) {
+      await User.create({
+        username: 'visitor',
+        password: 'visitorpassword',
+        name: 'Front Desk Visitor',
+        role: 'visitor',
+      });
+      console.log('Seeded default Visitor user (visitor / visitorpassword)');
+    }
   } catch (error) {
     console.error('Error seeding default users:', error.message);
   }
