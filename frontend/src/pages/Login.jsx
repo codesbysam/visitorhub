@@ -106,7 +106,7 @@ const Login = () => {
           style={{ width: '100%' }}
         >
           <UserCheck size={18} />
-          <span>Login as Visitor (No Password)</span>
+          <span>Login as Visitor</span>
         </button>
       </div>
     </div>
