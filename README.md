@@ -5,7 +5,7 @@
 A fully responsive, enterprise-ready **Visitor Management System** built on the MERN stack (MongoDB, Express, React, Node.js). VisitorHub features a clean "Soft Pastel" UI, robust Role-Based Access Control (RBAC), and dual authentication (Google OAuth 2.0 & secure local JWT auth).
 
 ### 🚀 Live Demo
-**[🟢 View Live Demo]([INSERT_VERCEL_LINK_HERE])**  
+**[🟢 View Live Demo](https://frontend-ivory-iota-f6vrwrvxwc.vercel.app)**  
 *(Note: Google Login on the live demo requires your Google account to be authorized in the project's OAuth settings)*
 
 ---
