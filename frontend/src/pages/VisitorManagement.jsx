@@ -96,6 +96,21 @@ const VisitorManagement = () => {
     document.body.removeChild(link);
   };
 
+  if (!isAdmin) {
+    return (
+      <div className="visitor-management" style={{ maxWidth: '600px', margin: '2rem auto' }}>
+        <VisitorForm 
+          isInline={true}
+          onSubmit={(data) => {
+            handleSubmit(data);
+            alert("Registration successful! Thank you.");
+            window.location.reload(); // Quick reset for the next visitor
+          }}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="visitor-management">
       <div className="toolbar">

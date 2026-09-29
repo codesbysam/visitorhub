@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 
-const VisitorForm = ({ isOpen, onClose, onSubmit, initialData }) => {
+const VisitorForm = ({ isOpen, onClose, onSubmit, initialData, isInline = false }) => {
   const [formData, setFormData] = useState({
     name: '',
     mobileNumber: '',
@@ -33,17 +33,18 @@ const VisitorForm = ({ isOpen, onClose, onSubmit, initialData }) => {
     onSubmit(formData);
   };
 
-  if (!isOpen) return null;
+  if (!isOpen && !isInline) return null;
 
-  return (
-    <div className="modal-overlay">
-      <div className="modal-content glass-panel">
-        <div className="modal-header">
-          <h2>{initialData ? 'Edit Visitor' : 'New Visitor Registration'}</h2>
+  const formContent = (
+    <div className={`modal-content glass-panel ${isInline ? 'inline-form' : ''}`}>
+      <div className="modal-header">
+        <h2>{initialData ? 'Edit Visitor' : 'New Visitor Registration'}</h2>
+        {!isInline && (
           <button className="close-btn" onClick={onClose}>
             <X size={24} />
           </button>
-        </div>
+        )}
+      </div>
         
         <form onSubmit={handleSubmit}>
           <div className="input-group">
@@ -112,15 +113,26 @@ const VisitorForm = ({ isOpen, onClose, onSubmit, initialData }) => {
           </div>
           
           <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-            <button type="button" className="btn btn-secondary" style={{ flex: 1 }} onClick={onClose}>
-              Cancel
-            </button>
+            {!isInline && (
+              <button type="button" className="btn btn-secondary" style={{ flex: 1 }} onClick={onClose}>
+                Cancel
+              </button>
+            )}
             <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>
               {initialData ? 'Save Changes' : 'Register Visitor'}
             </button>
           </div>
         </form>
       </div>
+  );
+
+  if (isInline) {
+    return formContent;
+  }
+
+  return (
+    <div className="modal-overlay">
+      {formContent}
     </div>
   );
 };
